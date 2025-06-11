@@ -1,13 +1,13 @@
 import React from "react";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 import Dashboard from "./pages/Dashboard";
+import AuthModal from "./components/AuthModal";
 
 const AppContent: React.FC = () => {
-	// const { user } = useAuth();
+	const { user } = useAuth();
 
 	return (
 		<div className="min-h-screen bg-gray-100">
-			{/*
 			{!user && (
 				<>
 					<div className="filter blur-sm pointer-events-none select-none">
@@ -17,9 +17,6 @@ const AppContent: React.FC = () => {
 				</>
 			)}
 			{user && <Dashboard />}
-			*/}
-			{/* Bypassing login/signup for development: Always show Dashboard */}
-			<Dashboard />
 		</div>
 	);
 };

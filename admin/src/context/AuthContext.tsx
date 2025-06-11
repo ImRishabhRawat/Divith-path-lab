@@ -31,12 +31,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 	}, []);
 
 	const login = async (email: string, password: string) => {
-		// Dummy: Accept any email/password, set admin if email includes "admin"
-		const role = email.includes("admin") ? "admin" : "staff";
-		const fakeUser = { name: email.split("@")[0], email, role };
-		setUser(fakeUser);
-		localStorage.setItem("admin-user", JSON.stringify(fakeUser));
-		return true;
+		// Only allow a specific dummy login for devs
+		if (email === "dev@divith.com" && password === "dev123") {
+			const fakeUser: User = {
+				name: "Developer",
+				email,
+				role: "admin" as const,
+			};
+			setUser(fakeUser);
+			localStorage.setItem("admin-user", JSON.stringify(fakeUser));
+			return true;
+		}
+		return false;
 	};
 
 	const signup = async (
