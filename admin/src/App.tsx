@@ -8,15 +8,16 @@ const AppContent: React.FC = () => {
 
 	return (
 		<div className="min-h-screen bg-gray-100">
-			{!user && (
+			{/* {!user && (
 				<>
 					<div className="filter blur-sm pointer-events-none select-none">
 						<Dashboard />
 					</div>
 					<AuthModal />
 				</>
-			)}
-			{user && <Dashboard />}
+			)} */}
+			{/* {user && <Dashboard />} */}
+			<Dashboard/>
 		</div>
 	);
 };
