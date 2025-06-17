@@ -46,7 +46,7 @@ const columns = [
 ];
 
 const Footer = () => (
-	<footer className="w-full bg-[#1a1a1a] py-8 px-4 sm:px-6 lg:px-8 rounded-t-3xl">
+	<footer className="w-full bg-[#1a1a1a] py-8 px-4 sm:px-6 lg:px-8 ">
 		<div className="max-w-7xl mx-auto">
 			<div className="grid grid-cols-2 md:grid-cols-4 gap-8">
 				{columns.map((column) => (
@@ -68,7 +68,7 @@ const Footer = () => (
 			</div>
 			<div className="mt-8 pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center">
 				<div className="flex items-center gap-2 mb-4 md:mb-0">
-					<img src="/divith-logo.png" alt="Divith Logo" className="w-32 h-12" />
+					{/* <img src="/divith-logo.png" alt="Divith Logo" className="w-32 h-12" /> */}
 					<span className="text-white font-bold text-base leading-tight">
 						Divith <br />
 						<span className="block text-xs font-normal text-gray-300">

@@ -1,7 +1,7 @@
 import BookLabTests from "../components/BookLabTests";
 import BookTestSection from "../components/BookTestSection";
-import FindTestByHealthConcern from "../components/FindTestByHealthConcern";
-import FeatureSection from "../components/FeatureSection";
+// import FindTestByHealthConcern from "../components/FindTestByHealthConcern";
+// import FeatureSection from "../components/FeatureSection";
 
 const BookTestPage = () => {
 	return (
@@ -16,9 +16,9 @@ const BookTestPage = () => {
 				</p>
 			</div>
 			<BookTestSection />
-			<FindTestByHealthConcern />
+			{/* <FindTestByHealthConcern /> */}
 			<BookLabTests />
-			<FeatureSection />
+			{/* <FeatureSection /> */}
 		</div>
 	);
 };

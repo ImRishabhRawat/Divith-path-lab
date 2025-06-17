@@ -1,15 +1,15 @@
-import BookingHelpCTA from "../components/BookingHelpCTA";
-import BookLabTests from "../components/BookLabTests";
-import BookTestSection from "../components/BookTestSection";
-import DownloadAppSection from "../components/DownloadAppSection";
+// import BookingHelpCTA from "../components/BookingHelpCTA";
+// import BookLabTests from "../components/BookLabTests";
+// import BookTestSection from "../components/BookTestSection";
+// import DownloadAppSection from "../components/DownloadAppSection";
 import FAQSection from "../components/FAQSection";
 import FeatureSection from "../components/FeatureSection";
-import FindTestByHealthConcern from "../components/FindTestByHealthConcern";
+// import FindTestByHealthConcern from "../components/FindTestByHealthConcern";
 import Hero from "../components/Hero";
-import PartnersSection from "../components/PartnersSection";
+// import PartnersSection from "../components/PartnersSection";
 import Testimonials from "../components/Testimonials";
-import WhyChooseUs from "../components/WhyChooseUs";
-import WhyDivitlPathLabs from "../components/WhyDivitlPathLabs";
+// import WhyChooseUs from "../components/WhyChooseUs";
+// import WhyDivitlPathLabs from "../components/WhyDivitlPathLabs";
 
 const HomePage = () => {
 	return (
@@ -18,12 +18,12 @@ const HomePage = () => {
 				<Hero />
 				<FeatureSection />
 				{/* <BookTestSection/>*/}
-				<FindTestByHealthConcern />
-				<BookLabTests />
-				<BookingHelpCTA/>
+				{/* <FindTestByHealthConcern /> */}
+				{/* <BookLabTests /> */}
+				{/* <BookingHelpCTA/> */}
 				<Testimonials />
-				<WhyChooseUs/>
-				<PartnersSection />
+				{/* <WhyChooseUs/> */}
+				{/* <PartnersSection /> */}
 				<FAQSection/>
 				{/* <DownloadAppSection/> */}
 			</div>

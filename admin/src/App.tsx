@@ -1,7 +1,7 @@
 import React from "react";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import Dashboard from "./pages/Dashboard";
-import AuthModal from "./components/AuthModal";
+// import AuthModal from "./components/AuthModal";
 
 const AppContent: React.FC = () => {
 	const { user } = useAuth();
