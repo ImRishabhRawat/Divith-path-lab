@@ -1,77 +1,94 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface FormData {
 	// General Details
+	mobileNumber: string;
 	date: string;
 	regNo: string;
-	name: string;
 	prefix: string;
-	careOf: string;
+	firstName: string;
+	lastName: string;
+	relationshipType: string;
+	relationshipName: string;
 	address1: string;
 	address2: string;
 	city: string;
+	state: string;
 	aadhar: string;
+	aadharFile: File | null;
 	email: string;
-	category: string;
-	age: string;
-	refBy: string;
-	secondRef: string;
+	gender: string;
+	dateOfBirth: string;
+	refByDoctor: string;
+	refByHospital: string;
 	remark: string;
+	remarkFile: File | null;
 
 	// Sample & Payment Info
-	testName: string;
+	testParticulars: string;
 	sampleDate: string;
 	sampleNo: string;
 	colCenter: string;
 	sampleBy: string;
 	cashBy: string;
 	paymentMode: string;
-	paymentRefNo: string;
-	totalAmount: string;
-	discountPercent: string;
-	discount: string;
-	disType: string;
-	received: string;
-	due: string;
+	// Commented out fields as requested
+	// paymentRefNo: string;
+	// totalAmount: string;
+	// discountPercent: string;
+	// discount: string;
+	// disType: string;
+	// received: string;
+	// due: string;
 	image: File | null;
 }
 
 const PatientRegister: React.FC = () => {
 	const [currentStep, setCurrentStep] = useState(1);
 	const [formData, setFormData] = useState<FormData>({
+		mobileNumber: "",
 		date: "",
 		regNo: "",
-		name: "",
 		prefix: "",
-		careOf: "",
+		firstName: "",
+		lastName: "",
+		relationshipType: "",
+		relationshipName: "",
 		address1: "",
 		address2: "",
 		city: "",
+		state: "",
 		aadhar: "",
+		aadharFile: null,
 		email: "",
-		category: "",
-		age: "",
-		refBy: "",
-		secondRef: "",
+		gender: "",
+		dateOfBirth: "",
+		refByDoctor: "",
+		refByHospital: "",
 		remark: "",
-		testName: "",
+		remarkFile: null,
+		testParticulars: "",
 		sampleDate: "",
 		sampleNo: "",
 		colCenter: "",
 		sampleBy: "",
 		cashBy: "",
 		paymentMode: "",
-		paymentRefNo: "",
-		totalAmount: "",
-		discountPercent: "",
-		discount: "",
-		disType: "",
-		received: "",
-		due: "",
 		image: null,
 	});
 
 	const [errors, setErrors] = useState<Record<string, string>>({});
+
+	// Auto-fill date and generate registration number on component mount
+	useEffect(() => {
+		const today = new Date().toISOString().split("T")[0];
+		const regNumber = `REG${Date.now().toString().slice(-6)}`;
+		setFormData((prev) => ({
+			...prev,
+			date: today,
+			regNo: regNumber,
+		}));
+	}, []);
 
 	const handleInputChange = (
 		e: React.ChangeEvent<
@@ -98,16 +115,21 @@ const PatientRegister: React.FC = () => {
 		const newErrors: Record<string, string> = {};
 
 		if (step === 1) {
-			if (!formData.name.trim()) newErrors.name = "Name is required";
-			if (!formData.date) newErrors.date = "Date is required";
+			if (!formData.mobileNumber.trim())
+				newErrors.mobileNumber = "Mobile number is required";
+			if (!formData.firstName.trim())
+				newErrors.firstName = "First name is required";
+			if (!formData.lastName.trim())
+				newErrors.lastName = "Last name is required";
 			if (!formData.email.trim()) newErrors.email = "Email is required";
-			if (!formData.category) newErrors.category = "Category is required";
-			if (!formData.age) newErrors.age = "Age is required";
+			if (!formData.gender) newErrors.gender = "Gender is required";
+			if (!formData.dateOfBirth)
+				newErrors.dateOfBirth = "Date of birth is required";
 		}
 
 		if (step === 2) {
-			if (!formData.testName.trim())
-				newErrors.testName = "Test name is required";
+			if (!formData.testParticulars.trim())
+				newErrors.testParticulars = "Test particulars are required";
 			if (!formData.sampleDate)
 				newErrors.sampleDate = "Sample date is required";
 		}
@@ -181,33 +203,48 @@ const PatientRegister: React.FC = () => {
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 				<div>
 					<label className="block text-sm font-medium text-gray-700 mb-2">
-						Date *
+						Mobile Number *
+					</label>
+					<input
+						type="tel"
+						name="mobileNumber"
+						value={formData.mobileNumber}
+						onChange={handleInputChange}
+						className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+							errors.mobileNumber ? "border-red-500" : "border-gray-300"
+						}`}
+						placeholder="Enter mobile number"
+					/>
+					{errors.mobileNumber && (
+						<p className="text-red-500 text-sm mt-1">{errors.mobileNumber}</p>
+					)}
+				</div>
+
+				<div>
+					<label className="block text-sm font-medium text-gray-700 mb-2">
+						Date (Auto-filled)
 					</label>
 					<input
 						type="date"
 						name="date"
 						value={formData.date}
 						onChange={handleInputChange}
-						className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-							errors.date ? "border-red-500" : "border-gray-300"
-						}`}
+						className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+						readOnly
 					/>
-					{errors.date && (
-						<p className="text-red-500 text-sm mt-1">{errors.date}</p>
-					)}
 				</div>
 
 				<div>
 					<label className="block text-sm font-medium text-gray-700 mb-2">
-						Registration No.
+						Registration No. (Auto-generated)
 					</label>
 					<input
 						type="text"
 						name="regNo"
 						value={formData.regNo}
 						onChange={handleInputChange}
-						className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-						placeholder="Enter registration number"
+						className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50"
+						readOnly
 					/>
 				</div>
 
@@ -225,39 +262,77 @@ const PatientRegister: React.FC = () => {
 						<option value="Mrs.">Mrs.</option>
 						<option value="Ms.">Ms.</option>
 						<option value="Dr.">Dr.</option>
+						<option value="Prof.">Prof.</option>
 					</select>
 				</div>
 
 				<div>
 					<label className="block text-sm font-medium text-gray-700 mb-2">
-						Name *
+						First Name *
 					</label>
 					<input
 						type="text"
-						name="name"
-						value={formData.name}
+						name="firstName"
+						value={formData.firstName}
 						onChange={handleInputChange}
 						className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-							errors.name ? "border-red-500" : "border-gray-300"
+							errors.firstName ? "border-red-500" : "border-gray-300"
 						}`}
-						placeholder="Enter full name"
+						placeholder="Enter first name"
 					/>
-					{errors.name && (
-						<p className="text-red-500 text-sm mt-1">{errors.name}</p>
+					{errors.firstName && (
+						<p className="text-red-500 text-sm mt-1">{errors.firstName}</p>
 					)}
 				</div>
 
 				<div>
 					<label className="block text-sm font-medium text-gray-700 mb-2">
-						Care Of
+						Last Name *
 					</label>
 					<input
 						type="text"
-						name="careOf"
-						value={formData.careOf}
+						name="lastName"
+						value={formData.lastName}
+						onChange={handleInputChange}
+						className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+							errors.lastName ? "border-red-500" : "border-gray-300"
+						}`}
+						placeholder="Enter last name"
+					/>
+					{errors.lastName && (
+						<p className="text-red-500 text-sm mt-1">{errors.lastName}</p>
+					)}
+				</div>
+
+				<div>
+					<label className="block text-sm font-medium text-gray-700 mb-2">
+						Relationship Type
+					</label>
+					<select
+						name="relationshipType"
+						value={formData.relationshipType}
+						onChange={handleInputChange}
+						className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+						<option value="">Select Relationship</option>
+						<option value="C/O">C/O (Care Of)</option>
+						<option value="S/O">S/O (Son Of)</option>
+						<option value="D/O">D/O (Daughter Of)</option>
+						<option value="W/O">W/O (Wife Of)</option>
+						<option value="H/O">H/O (Husband Of)</option>
+					</select>
+				</div>
+
+				<div>
+					<label className="block text-sm font-medium text-gray-700 mb-2">
+						Relationship Name
+					</label>
+					<input
+						type="text"
+						name="relationshipName"
+						value={formData.relationshipName}
 						onChange={handleInputChange}
 						className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-						placeholder="Care of"
+						placeholder="Enter relationship name"
 					/>
 				</div>
 
@@ -305,6 +380,20 @@ const PatientRegister: React.FC = () => {
 
 				<div>
 					<label className="block text-sm font-medium text-gray-700 mb-2">
+						State
+					</label>
+					<input
+						type="text"
+						name="state"
+						value={formData.state}
+						onChange={handleInputChange}
+						className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+						placeholder="Enter state"
+					/>
+				</div>
+
+				<div>
+					<label className="block text-sm font-medium text-gray-700 mb-2">
 						Aadhar Number
 					</label>
 					<input
@@ -319,7 +408,25 @@ const PatientRegister: React.FC = () => {
 
 				<div>
 					<label className="block text-sm font-medium text-gray-700 mb-2">
-						Email *
+						Upload Aadhar Document
+					</label>
+					<input
+						type="file"
+						name="aadharFile"
+						accept=".pdf,.jpg,.jpeg,.png"
+						onChange={handleInputChange}
+						className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+					/>
+					{formData.aadharFile && (
+						<p className="text-sm text-green-600 mt-1">
+							File selected: {formData.aadharFile.name}
+						</p>
+					)}
+				</div>
+
+				<div>
+					<label className="block text-sm font-medium text-gray-700 mb-2">
+						Email Address *
 					</label>
 					<input
 						type="email"
@@ -338,76 +445,75 @@ const PatientRegister: React.FC = () => {
 
 				<div>
 					<label className="block text-sm font-medium text-gray-700 mb-2">
-						Category *
+						Gender *
 					</label>
 					<select
-						name="category"
-						value={formData.category}
+						name="gender"
+						value={formData.gender}
 						onChange={handleInputChange}
 						className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-							errors.category ? "border-red-500" : "border-gray-300"
+							errors.gender ? "border-red-500" : "border-gray-300"
 						}`}>
-						<option value="">Select Category</option>
+						<option value="">Select Gender</option>
 						<option value="Male">Male</option>
 						<option value="Female">Female</option>
 						<option value="Other">Other</option>
 					</select>
-					{errors.category && (
-						<p className="text-red-500 text-sm mt-1">{errors.category}</p>
+					{errors.gender && (
+						<p className="text-red-500 text-sm mt-1">{errors.gender}</p>
 					)}
 				</div>
 
 				<div>
 					<label className="block text-sm font-medium text-gray-700 mb-2">
-						Age *
+						Date of Birth *
 					</label>
 					<input
-						type="number"
-						name="age"
-						value={formData.age}
+						type="date"
+						name="dateOfBirth"
+						value={formData.dateOfBirth}
 						onChange={handleInputChange}
 						className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-							errors.age ? "border-red-500" : "border-gray-300"
+							errors.dateOfBirth ? "border-red-500" : "border-gray-300"
 						}`}
-						placeholder="Enter age"
 					/>
-					{errors.age && (
-						<p className="text-red-500 text-sm mt-1">{errors.age}</p>
+					{errors.dateOfBirth && (
+						<p className="text-red-500 text-sm mt-1">{errors.dateOfBirth}</p>
 					)}
 				</div>
 
 				<div>
 					<label className="block text-sm font-medium text-gray-700 mb-2">
-						Referred By
+						Referred By (Doctor Name)
 					</label>
 					<input
 						type="text"
-						name="refBy"
-						value={formData.refBy}
+						name="refByDoctor"
+						value={formData.refByDoctor}
 						onChange={handleInputChange}
 						className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-						placeholder="Referred by"
+						placeholder="Enter doctor's name"
 					/>
 				</div>
 
 				<div>
 					<label className="block text-sm font-medium text-gray-700 mb-2">
-						Second Reference
+						Referred By (Hospital/Clinic Name)
 					</label>
 					<input
 						type="text"
-						name="secondRef"
-						value={formData.secondRef}
+						name="refByHospital"
+						value={formData.refByHospital}
 						onChange={handleInputChange}
 						className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-						placeholder="Second reference"
+						placeholder="Enter hospital/clinic name"
 					/>
 				</div>
 			</div>
 
 			<div>
 				<label className="block text-sm font-medium text-gray-700 mb-2">
-					Remarks
+					Remarks/Notes
 				</label>
 				<textarea
 					name="remark"
@@ -415,8 +521,26 @@ const PatientRegister: React.FC = () => {
 					onChange={handleInputChange}
 					rows={3}
 					className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-					placeholder="Enter any remarks"
+					placeholder="Enter any remarks or notes"
 				/>
+			</div>
+
+			<div>
+				<label className="block text-sm font-medium text-gray-700 mb-2">
+					Upload Remark/Note Files
+				</label>
+				<input
+					type="file"
+					name="remarkFile"
+					accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+					onChange={handleInputChange}
+					className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+				/>
+				{formData.remarkFile && (
+					<p className="text-sm text-green-600 mt-1">
+						File selected: {formData.remarkFile.name}
+					</p>
+				)}
 			</div>
 		</div>
 	);
@@ -428,22 +552,57 @@ const PatientRegister: React.FC = () => {
 			</h2>
 
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-				<div>
+				<div className="md:col-span-2">
 					<label className="block text-sm font-medium text-gray-700 mb-2">
-						Test Name *
+						Particulars of Test *
 					</label>
-					<input
-						type="text"
-						name="testName"
-						value={formData.testName}
-						onChange={handleInputChange}
-						className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-							errors.testName ? "border-red-500" : "border-gray-300"
-						}`}
-						placeholder="Enter test name"
-					/>
-					{errors.testName && (
-						<p className="text-red-500 text-sm mt-1">{errors.testName}</p>
+					<div className="space-y-2">
+						<input
+							type="text"
+							name="testParticulars"
+							value={formData.testParticulars}
+							onChange={handleInputChange}
+							className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+								errors.testParticulars ? "border-red-500" : "border-gray-300"
+							}`}
+							placeholder="Search and select test"
+						/>
+						<select
+							name="testParticularsDropdown"
+							onChange={(e) =>
+								setFormData((prev) => ({
+									...prev,
+									testParticulars: e.target.value,
+								}))
+							}
+							className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+							<option value="">Select from test categories</option>
+							<option value="Blood Test - Complete Blood Count (CBC)">
+								Blood Test - Complete Blood Count (CBC)
+							</option>
+							<option value="Blood Test - Lipid Profile">
+								Blood Test - Lipid Profile
+							</option>
+							<option value="Blood Test - Thyroid Function Test">
+								Blood Test - Thyroid Function Test
+							</option>
+							<option value="Urine Test - Routine Examination">
+								Urine Test - Routine Examination
+							</option>
+							<option value="X-Ray - Chest">X-Ray - Chest</option>
+							<option value="Ultrasound - Abdomen">Ultrasound - Abdomen</option>
+							<option value="ECG">ECG</option>
+							<option value="Blood Sugar - Fasting">
+								Blood Sugar - Fasting
+							</option>
+							<option value="Blood Sugar - Random">Blood Sugar - Random</option>
+							<option value="Liver Function Test">Liver Function Test</option>
+						</select>
+					</div>
+					{errors.testParticulars && (
+						<p className="text-red-500 text-sm mt-1">
+							{errors.testParticulars}
+						</p>
 					)}
 				</div>
 
@@ -532,109 +691,15 @@ const PatientRegister: React.FC = () => {
 						className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
 						<option value="">Select Payment Mode</option>
 						<option value="Cash">Cash</option>
-						<option value="Card">Card</option>
+						<option value="SBI Account">SBI Account</option>
+						<option value="HDFC Account">HDFC Account</option>
+						<option value="ICICI Account">ICICI Account</option>
+						<option value="Axis Bank Account">Axis Bank Account</option>
+						<option value="PNB Account">PNB Account</option>
 						<option value="UPI">UPI</option>
-						<option value="Net Banking">Net Banking</option>
+						<option value="Credit Card">Credit Card</option>
+						<option value="Debit Card">Debit Card</option>
 					</select>
-				</div>
-
-				<div>
-					<label className="block text-sm font-medium text-gray-700 mb-2">
-						Payment Reference No.
-					</label>
-					<input
-						type="text"
-						name="paymentRefNo"
-						value={formData.paymentRefNo}
-						onChange={handleInputChange}
-						className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-						placeholder="Enter payment reference number"
-					/>
-				</div>
-
-				<div>
-					<label className="block text-sm font-medium text-gray-700 mb-2">
-						Total Amount
-					</label>
-					<input
-						type="number"
-						name="totalAmount"
-						value={formData.totalAmount}
-						onChange={handleInputChange}
-						className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-						placeholder="Enter total amount"
-					/>
-				</div>
-
-				<div>
-					<label className="block text-sm font-medium text-gray-700 mb-2">
-						Discount %
-					</label>
-					<input
-						type="number"
-						name="discountPercent"
-						value={formData.discountPercent}
-						onChange={handleInputChange}
-						className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-						placeholder="Enter discount percentage"
-					/>
-				</div>
-
-				<div>
-					<label className="block text-sm font-medium text-gray-700 mb-2">
-						Discount Amount
-					</label>
-					<input
-						type="number"
-						name="discount"
-						value={formData.discount}
-						onChange={handleInputChange}
-						className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-						placeholder="Enter discount amount"
-					/>
-				</div>
-
-				<div>
-					<label className="block text-sm font-medium text-gray-700 mb-2">
-						Discount Type
-					</label>
-					<select
-						name="disType"
-						value={formData.disType}
-						onChange={handleInputChange}
-						className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-						<option value="">Select Discount Type</option>
-						<option value="Percentage">Percentage</option>
-						<option value="Fixed">Fixed Amount</option>
-					</select>
-				</div>
-
-				<div>
-					<label className="block text-sm font-medium text-gray-700 mb-2">
-						Amount Received
-					</label>
-					<input
-						type="number"
-						name="received"
-						value={formData.received}
-						onChange={handleInputChange}
-						className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-						placeholder="Enter received amount"
-					/>
-				</div>
-
-				<div>
-					<label className="block text-sm font-medium text-gray-700 mb-2">
-						Due Amount
-					</label>
-					<input
-						type="number"
-						name="due"
-						value={formData.due}
-						onChange={handleInputChange}
-						className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-						placeholder="Enter due amount"
-					/>
 				</div>
 			</div>
 
@@ -659,6 +724,36 @@ const PatientRegister: React.FC = () => {
 					</div>
 				)}
 			</div>
+
+			{/* Commented out payment calculation fields as requested */}
+			{/*
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 opacity-50">
+				<div>
+					<label className="block text-sm font-medium text-gray-700 mb-2">
+						Payment Reference No. (UTR)
+					</label>
+					<input
+						type="text"
+						name="paymentRefNo"
+						disabled
+						className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100"
+						placeholder="For online payments only"
+					/>
+				</div>
+				<div>
+					<label className="block text-sm font-medium text-gray-700 mb-2">
+						Total Amount (Auto-generated)
+					</label>
+					<input
+						type="number"
+						name="totalAmount"
+						disabled
+						className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100"
+						placeholder="Auto-calculated"
+					/>
+				</div>
+			</div>
+			*/}
 		</div>
 	);
 
@@ -674,22 +769,42 @@ const PatientRegister: React.FC = () => {
 				</h3>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 text-sm">
 					<div>
+						<strong>Mobile:</strong> {formData.mobileNumber}
+					</div>
+					<div>
 						<strong>Date:</strong> {formData.date}
 					</div>
 					<div>
-						<strong>Name:</strong> {formData.prefix} {formData.name}
+						<strong>Registration No:</strong> {formData.regNo}
+					</div>
+					<div>
+						<strong>Name:</strong> {formData.prefix} {formData.firstName}{" "}
+						{formData.lastName}
+					</div>
+					<div>
+						<strong>Relationship:</strong> {formData.relationshipType}{" "}
+						{formData.relationshipName}
 					</div>
 					<div>
 						<strong>Email:</strong> {formData.email}
 					</div>
 					<div>
-						<strong>Category:</strong> {formData.category}
+						<strong>Gender:</strong> {formData.gender}
 					</div>
 					<div>
-						<strong>Age:</strong> {formData.age}
+						<strong>Date of Birth:</strong> {formData.dateOfBirth}
 					</div>
 					<div>
 						<strong>City:</strong> {formData.city}
+					</div>
+					<div>
+						<strong>State:</strong> {formData.state}
+					</div>
+					<div>
+						<strong>Referred by Doctor:</strong> {formData.refByDoctor}
+					</div>
+					<div>
+						<strong>Referred by Hospital:</strong> {formData.refByHospital}
 					</div>
 				</div>
 			</div>
@@ -700,36 +815,49 @@ const PatientRegister: React.FC = () => {
 				</h3>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 text-sm">
 					<div>
-						<strong>Test Name:</strong> {formData.testName}
+						<strong>Test Particulars:</strong> {formData.testParticulars}
 					</div>
 					<div>
 						<strong>Sample Date:</strong> {formData.sampleDate}
 					</div>
 					<div>
-						<strong>Total Amount:</strong> ₹{formData.totalAmount}
-					</div>
-					<div>
 						<strong>Payment Mode:</strong> {formData.paymentMode}
 					</div>
 					<div>
-						<strong>Amount Received:</strong> ₹{formData.received}
-					</div>
-					<div>
-						<strong>Due Amount:</strong> ₹{formData.due}
+						<strong>Collection Center:</strong> {formData.colCenter}
 					</div>
 				</div>
 			</div>
 
-			{formData.image && (
+			{(formData.image || formData.aadharFile || formData.remarkFile) && (
 				<div className="bg-gray-50 p-4 sm:p-6 rounded-lg">
 					<h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
-						Patient Image
+						Uploaded Files
 					</h3>
-					<img
-						src={URL.createObjectURL(formData.image)}
-						alt="Patient"
-						className="w-32 h-32 object-cover rounded-lg border"
-					/>
+					{formData.image && (
+						<div className="mb-4">
+							<p className="text-sm font-medium">Patient Image:</p>
+							<img
+								src={URL.createObjectURL(formData.image)}
+								alt="Patient"
+								className="w-32 h-32 object-cover rounded-lg border mt-2"
+							/>
+						</div>
+					)}
+					{formData.aadharFile && (
+						<div className="mb-4">
+							<p className="text-sm font-medium">
+								Aadhar Document: {formData.aadharFile.name}
+							</p>
+						</div>
+					)}
+					{formData.remarkFile && (
+						<div className="mb-4">
+							<p className="text-sm font-medium">
+								Remark File: {formData.remarkFile.name}
+							</p>
+						</div>
+					)}
 				</div>
 			)}
 		</div>

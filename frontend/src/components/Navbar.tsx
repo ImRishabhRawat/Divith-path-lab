@@ -25,14 +25,14 @@ const HamburgerIcon = () => (
 		height="28"
 		fill="none"
 		viewBox="0 0 24 24"
-		stroke="#006666"
+		stroke="#2563eb"
 		strokeWidth="2">
 		<line
 			x1="5"
 			y1="7"
 			x2="19"
 			y2="7"
-			stroke="#006666"
+			stroke="#2563eb"
 			strokeWidth="2"
 			strokeLinecap="round"
 		/>
@@ -41,7 +41,7 @@ const HamburgerIcon = () => (
 			y1="12"
 			x2="19"
 			y2="12"
-			stroke="#006666"
+			stroke="#2563eb"
 			strokeWidth="2"
 			strokeLinecap="round"
 		/>
@@ -50,7 +50,7 @@ const HamburgerIcon = () => (
 			y1="17"
 			x2="19"
 			y2="17"
-			stroke="#006666"
+			stroke="#2563eb"
 			strokeWidth="2"
 			strokeLinecap="round"
 		/>
@@ -72,7 +72,7 @@ const Navbar = () => {
 
 	return (
 		<header className="w-full max-w-[1680px] mx-auto sticky top-0 z-30 font-sans mb-4">
-			<div className="bg-white shadow-lg border border-[#e0f7fa] backdrop-blur-sm">
+			<div className="bg-white shadow-lg border border-[#bfdbfe] backdrop-blur-sm">
 				{/* Main Header Row */}
 				<div className="flex items-center justify-between max-w-7xl mx-auto px-4 md:px-8 py-4 w-full">
 					{/* Logo */}
@@ -92,7 +92,7 @@ const Navbar = () => {
 							<Link
 								key={link.label}
 								to={link.path}
-								className="text-gray-700 font-medium hover:text-[#006666] transition-colors duration-200 px-2 py-1 rounded-md hover:bg-[#f0fffe]">
+								className="text-gray-700 font-medium hover:text-[#2563eb] transition-colors duration-200 px-2 py-1 rounded-md hover:bg-[#eff6ff]">
 								{link.label}
 							</Link>
 						))}
@@ -102,14 +102,14 @@ const Navbar = () => {
 					<div className="flex items-center gap-4">
 						<Link
 							to="/login"
-							className="hidden md:flex items-center gap-2 bg-[#006666] text-white px-4 py-2 rounded-lg hover:bg-[#005555] transition-colors duration-200 font-medium">
+							className="hidden md:flex items-center gap-2 bg-[#2563eb] text-white px-4 py-2 rounded-lg hover:bg-[#1d4ed8] transition-colors duration-200 font-medium">
 							<UserIcon className="text-white" />
 							Login
 						</Link>
-						
+
 						{/* Mobile Menu Button */}
 						<button
-							className="lg:hidden p-2 rounded-lg hover:bg-[#f0fffe] transition-colors"
+							className="lg:hidden p-2 rounded-lg hover:bg-[#eff6ff] transition-colors"
 							onClick={() => setMenuOpen((open) => !open)}
 							aria-label="Open menu">
 							<HamburgerIcon />
@@ -120,7 +120,7 @@ const Navbar = () => {
 				{/* Mobile Menu Drawer */}
 				{menuOpen && (
 					<div className="fixed inset-0 z-40 bg-black bg-opacity-30 flex justify-end lg:hidden">
-						<div className="w-80 bg-white h-full shadow-xl p-6 flex flex-col gap-6 animate-slideIn border-l border-[#e0f7fa]">
+						<div className="w-80 bg-white h-full shadow-xl p-6 flex flex-col gap-6 animate-slideIn border-l border-[#bfdbfe]">
 							<div className="flex items-center justify-between mb-4">
 								<img
 									src="/divith-logo.png"
@@ -128,29 +128,29 @@ const Navbar = () => {
 									className="w-24 h-12"
 								/>
 								<button
-									className="text-2xl text-gray-500 hover:text-[#006666] transition-colors"
+									className="text-2xl text-gray-500 hover:text-[#2563eb] transition-colors"
 									onClick={() => setMenuOpen(false)}
 									aria-label="Close menu">
 									&times;
 								</button>
 							</div>
-							
+
 							<div className="flex flex-col gap-2">
 								{/* Mobile Login Button */}
 								<Link
 									to="/login"
-									className="flex items-center gap-3 bg-[#006666] text-white px-4 py-3 rounded-lg hover:bg-[#005555] transition-colors duration-200 font-medium mb-4"
+									className="flex items-center gap-3 bg-[#2563eb] text-white px-4 py-3 rounded-lg hover:bg-[#1d4ed8] transition-colors duration-200 font-medium mb-4"
 									onClick={() => setMenuOpen(false)}>
 									<UserIcon className="text-white" />
 									Login
 								</Link>
-								
+
 								{/* Navigation Links */}
 								{NAV_LINKS.map((link) => (
 									<Link
 										key={link.label}
 										to={link.path}
-										className="text-gray-700 font-medium py-3 px-2 hover:text-[#006666] hover:bg-[#f0fffe] rounded-md transition-colors duration-200"
+										className="text-gray-700 font-medium py-3 px-2 hover:text-[#2563eb] hover:bg-[#eff6ff] rounded-md transition-colors duration-200"
 										onClick={() => setMenuOpen(false)}>
 										{link.label}
 									</Link>
