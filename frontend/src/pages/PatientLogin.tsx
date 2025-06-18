@@ -43,25 +43,25 @@ const PatientLogin: React.FC = () => {
 					/>
 				</div>
 				<div className="flex justify-between items-center text-xs">
-					<button type="button" className="text-green-700 hover:underline">
+					<button type="button" className="text-blue-700 hover:underline">
 						Forgot password?
 					</button>
 					<button
 						type="button"
-						className="text-green-700 hover:underline"
+						className="text-blue-700 hover:underline"
 						onClick={() => navigate("/register")}>
 						Register
 					</button>
 				</div>
 				<button
 					type="submit"
-					className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg shadow mt-4 transition">
+					className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg shadow mt-4 transition">
 					Login
 				</button>
 			</form>
 			<style>{`
         .input {
-          @apply w-full border border-gray-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-400 text-gray-700 text-sm shadow-sm transition;
+          @apply w-full border border-gray-300 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-400 text-gray-700 text-sm shadow-sm transition;
         }
       `}</style>
 		</div>

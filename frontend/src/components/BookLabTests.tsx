@@ -99,10 +99,10 @@ const BookLabTests = () => {
 						</div>
 						<div className="flex flex-row sm:flex-row items-center gap-2 min-w-[180px] justify-end">
 							<span className="text-gray-400 line-through text-base font-medium mr-2">
-								${test.oldPrice.toFixed(2)}
+								₹{test.oldPrice.toFixed(2)}
 							</span>
 							<span className="text-xl font-bold text-black">
-								${test.price.toFixed(2)}
+								₹{test.price.toFixed(2)}
 							</span>
 							{/* Desktop: Add button */}
 							<button className="ml-2 px-5 py-1.5 rounded-full border border-black text-black font-semibold text-base hover:bg-black hover:text-white transition-colors hidden sm:block">
